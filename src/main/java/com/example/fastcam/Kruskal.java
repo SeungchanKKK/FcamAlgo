@@ -2,6 +2,7 @@ package com.example.fastcam;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class Kruskal {
     public static class Edge implements Comparable<Edge>{
@@ -14,14 +15,25 @@ public class Kruskal {
             this.nodeV = nodeV;
             this.nodeU = nodeU;
         }
-
+        //출력메서드
         public String toString(){
             return "("+this.weight+","+this.nodeV+","+this.nodeU+")";
         }
-
+        //비교메서드
         @Override
         public int compareTo(Edge edge){
             return this.weight-edge.weight;
+        }
+
+        //Union-Finde 메서드
+        HashMap<String, String> parent = new HashMap<String, String>();
+        HashMap<String, Integer> rank = new HashMap<String, Integer>();
+
+        public String find(String node){
+            //path compression 기법
+            if (parent.get(node)!=node){
+                return find(parent.get(node));
+            }
         }
     }
 
