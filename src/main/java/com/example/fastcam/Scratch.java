@@ -1,6 +1,6 @@
 package com.example.fastcam;
 
-public class Scatch {
+public class Scratch {
     public static void main(String[] args) {
         String dataset[] = {
                 "Braund, Mr. Owen Harris",

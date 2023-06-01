@@ -29,12 +29,12 @@ public class Kruskal {
         HashMap<String, String> parent = new HashMap<String, String>();
         HashMap<String, Integer> rank = new HashMap<String, Integer>();
 
-        public String find(String node){
+        public String find(String node) {
             //path compression 기법
-            if (parent.get(node)!=node){
+            if (parent.get(node) != node) {
                 return find(parent.get(node));
             }
-        }
+        return null;}
     }
 
     //입력예시
