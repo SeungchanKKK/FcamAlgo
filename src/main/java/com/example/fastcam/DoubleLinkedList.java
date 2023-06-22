@@ -73,6 +73,36 @@ public class DoubleLinkedList<T>{
         }
     }
 
+    public boolean insertToFront(T existedData, T addData){
+        if (this.head == null) {
+            this.head = new Node<T>(addData);
+            this.tail = this.head;
+            return true;
+        }else if(head.data==existedData){
+            Node<T>node = this.head;
+            this.head = new Node<T>(addData);
+            this.tail=node;
+            head.next=node;
+            node.prev= head;
+            return true;
+        }else {
+            Node<T>node = this.head;
+            while (node!=null){
+                if (node.data==existedData){
+                    Node<T>newNode = new Node<>(addData);
+                    node.prev.next= newNode;
+                    node.prev = newNode;
+                    newNode.prev=node.prev;
+                    newNode.next=node;
+                    return true;
+                }else {
+                    node=node.next;
+                }
+            }
+            return false;
+        }
+    }
+
     public static void main(String[] args) {
         DoubleLinkedList<Integer>MyLinkedList = new DoubleLinkedList<>();
         MyLinkedList.addNode(1);
@@ -80,7 +110,19 @@ public class DoubleLinkedList<T>{
         MyLinkedList.addNode(3);
         MyLinkedList.addNode(4);
         MyLinkedList.addNode(5);
+        MyLinkedList.printAll();
+        System.out.println("----------------");
 
+        MyLinkedList.insertToFront(3, 2);
+        MyLinkedList.printAll();
+        System.out.println("----------------");
+
+        MyLinkedList.insertToFront(6, 2);
+        MyLinkedList.insertToFront(1, 0);
+        MyLinkedList.printAll();
+        System.out.println("----------------");
+
+        MyLinkedList.addNode(6);
         MyLinkedList.printAll();
     }
 }
