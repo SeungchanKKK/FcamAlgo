@@ -10,11 +10,9 @@ public class MyHash {
     public class Slot{
         String key;
         String value;
-        Slot next;
         public Slot(String key,String value) {
             this.value = value;
             this.key =key;
-            this.next = null;
         }
     }
     public Integer hashFunc(String key){
@@ -24,18 +22,25 @@ public class MyHash {
     public boolean saveData(String key, String value) {
         Integer address = this.hashFunc(key);
         if(hashTable[address]!=null){
-            Slot prevSlot = this.hashTable[address];
-            Slot findSlot = this.hashTable[address];
-            while (findSlot!=null){
-                if (findSlot.key.equals(key)){
-                    this.hashTable[address].value= value;
-                    return true;
-                }else {
-                    prevSlot= findSlot;
-                    findSlot=findSlot.next;
+            if (this.hashTable[address].key==key){
+                this.hashTable[address].value=value;
+                return true;
+            }else {
+                Integer currAddress = address + 1;
+                while (this.hashTable[currAddress] != null) {
+                    if (this.hashTable[currAddress].key == key) {
+                        this.hashTable[currAddress].value = value;
+                        return true;
+                    } else {
+                        currAddress++;
+                        if (currAddress >= this.hashTable.length) {
+                            return false;
+                        }
+                    }
                 }
+                this.hashTable[currAddress] = new Slot(key, value);
+                return true;
             }
-            prevSlot.next= new Slot(key,value);
         }else {
             this.hashTable[address]=new Slot(key, value);
         }
@@ -45,15 +50,21 @@ public class MyHash {
     public String getData(String key){
         Integer address = this.hashFunc(key);
         if (this.hashTable[address] != null) {
-            Slot slot = this.hashTable[address];
-            while (slot!=null){
-                if (slot.key.equals(key)){
-                    return slot.value;
-                }else {
-                    slot=slot.next;
-                }
-            }
-            return null;
+           if(this.hashTable[address].key==key){
+               return hashTable[address].value;
+           }else {
+               while (hashTable[address] != null){
+                   if (hashTable[address].key== key){
+                       return hashTable[address].value;
+                   }else {
+                       address++;
+                       if (address >= this.hashTable.length) {
+                           return null;
+                       }
+                   }
+               }
+               return null;
+           }
         } else {
             return null;
         }
@@ -65,6 +76,6 @@ public class MyHash {
         mainObject.saveData("fun-coding", "01033334444");
         mainObject.saveData("David", "01044445555");
         mainObject.saveData("Dave", "01055556666");
-        System.out.println(   mainObject.getData("David"));
+        System.out.println(    mainObject.getData("David"));
     }
 }
