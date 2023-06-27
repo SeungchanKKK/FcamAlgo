@@ -16,7 +16,6 @@ public class NQueen {
     public void dfsFunc(Integer N, Integer currentRow, ArrayList<Integer> currentCandidate){
         if (currentRow==N){
             System.out.println(currentCandidate);
-            return;
         }else {
             for (int i=0; i<N; i++){
                 if (this.isAvailable(currentCandidate,i)){
@@ -26,5 +25,10 @@ public class NQueen {
                 }
             }
         }
+    }
+
+    public static void main(String[] args) {
+        NQueen nObject = new NQueen();
+        nObject.dfsFunc(4, 0, new ArrayList<Integer>());
     }
 }
