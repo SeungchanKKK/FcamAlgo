@@ -1,6 +1,7 @@
 package com.example.fastcam;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
@@ -20,15 +21,28 @@ public class DijkstraPath {
             if (distances.get(node.vertex) < baseDistance) {
                 continue;
             }
-
             ArrayList<Edge>ways= graph.get(node.vertex);
             for (int i=0; i<ways.size();i++){
-                int minDistance = ways.get(i).distance+baseDistance;
-                if (distances.get(ways.get(i).vertex)<minDistance){
-                    distances.put(ways.get(i).vertex,minDistance);
-                    priorityQueue.add(ways.get(i));
+                int minDistance = ways.get(i).distance;
+                String way =ways.get(i).vertex;
+                if (distances.get(way)>minDistance+baseDistance){
+                    distances.put(way,minDistance+baseDistance);
+                    priorityQueue.add(new Edge(minDistance+baseDistance,way));
                 }
             }
         }
+        return distances;
+    }
+
+    public static void main(String[] args) {
+        HashMap<String, ArrayList<Edge>> graph = new HashMap<String, ArrayList<Edge>>();
+        graph.put("A", new ArrayList<Edge>(Arrays.asList(new Edge(8, "B"), new Edge(1, "C"), new Edge(2, "D"))));
+        graph.put("B", new ArrayList<Edge>());
+        graph.put("C", new ArrayList<Edge>(Arrays.asList(new Edge(5, "B"), new Edge(2, "D"))));
+        graph.put("D", new ArrayList<Edge>(Arrays.asList(new Edge(3, "E"), new Edge(5, "F"))));
+        graph.put("E", new ArrayList<Edge>(Arrays.asList(new Edge(1, "F"))));
+        graph.put("F", new ArrayList<Edge>(Arrays.asList(new Edge(5, "A"))));
+        DijkstraPath dObject = new DijkstraPath();
+        System.out.println(dObject.dijkstraFunc(graph, "A"));
     }
 }
