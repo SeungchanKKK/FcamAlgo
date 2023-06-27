@@ -3,16 +3,16 @@ package com.example.fastcam;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class InsertionSort {
-    public ArrayList<Integer> sort(ArrayList<Integer> dataList) {
-        for (int index = 0; index < dataList.size() - 1; index++) {
-            for (int index2 = index + 1; index2 > 0; index2--) {
-                if (dataList.get(index2) < dataList.get(index2 - 1)) {
-                    Collections.swap(dataList, index2, index2 - 1);
-                } else {
-                    break;
+public class SelectionSort {
+    public ArrayList<Integer>sort(ArrayList<Integer>dataList){
+        for (int i=0; i< dataList.size()-1; i++){
+            Integer smallest =i;
+            for (int j=i+1; j<dataList.size(); j++){
+                if (dataList.get(j)<dataList.get(smallest)){
+                    smallest= j;
                 }
             }
+            Collections.swap(dataList,smallest,i);
         }
         return dataList;
     }
